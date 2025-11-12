@@ -13,9 +13,9 @@ This project demonstrates clean architecture using **Zustand**, **Shadcn/UI**, a
 ## 🔗 Live Demo
 
 You can try the app here:
-**[Add your live demo link here if hosted]**
+**[live demo link here:]**
 
-> Example: [https://note-tacker.example.com](https://note-tacker.example.com)
+> [https://note-tacker.netlify.app](https://note-tacker.netlify.app)
 
 ---
 
