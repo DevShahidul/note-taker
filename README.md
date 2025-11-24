@@ -1,4 +1,4 @@
-# 📝 Note Tacker
+# 📝 Note Taker
 
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![React](https://img.shields.io/badge/React-19-blue)
@@ -15,7 +15,7 @@ This project demonstrates clean architecture using **Zustand**, **Shadcn/UI**, a
 You can try the app here:
 **[live demo link here:]**
 
-> [https://note-tacker.netlify.app](https://note-tacker.netlify.app)
+> [https://note-taker.netlify.app](https://note-taker.netlify.app)
 
 ---
 
@@ -36,6 +36,7 @@ You can try the app here:
 * ✏️ Edit or update existing notes
 * ❌ Delete notes
 * 🧩 Modular structure for easy integration into larger projects
+* ᚛  Sort by oldest or newest and Lessons
 
 ---
 
@@ -59,23 +60,23 @@ Each feature folder (like `note`) contains:
 
 Example:
 
-![Empty Note](https://raw.githubusercontent.com/DevShahidul/note-tacker/main/screenshots/empty-note-list.png)
+![Empty Note](https://raw.githubusercontent.com/DevShahidul/note-taker/main/screenshots/empty-note-list.png)
 
 *Empty note list*
 
-![Create Note](https://raw.githubusercontent.com/DevShahidul/note-tacker/main/screenshots/create-new-note.png)
+![Create Note](https://raw.githubusercontent.com/DevShahidul/note-taker/main/screenshots/create-new-note.png)
 
 *Create Note*
 
-![Note List](https://raw.githubusercontent.com/DevShahidul/note-tacker/main/screenshots/note-list.png)
+![Note List](https://raw.githubusercontent.com/DevShahidul/note-taker/main/screenshots/note-list.png)
 
 *Note list view with edit & delete actions*
 
-![Edit Note](https://raw.githubusercontent.com/DevShahidul/note-tacker/main/screenshots/edit-note.png)
+![Edit Note](https://raw.githubusercontent.com/DevShahidul/note-taker/main/screenshots/edit-note.png)
 
 *Edit note in inline editor*
 
-![Delete Note](https://raw.githubusercontent.com/DevShahidul/note-tacker/main/screenshots/delete-note.png)
+![Delete Note](https://raw.githubusercontent.com/DevShahidul/note-taker/main/screenshots/delete-note.png)
 
 *Delete note in inline editor*
 
@@ -88,10 +89,10 @@ Clone the repository and run the app locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/DevShahidul/note-tacker.git
+git clone https://github.com/DevShahidul/note-taker.git
 
 # Navigate to project folder
-cd note-tacker
+cd note-taker
 
 # Install dependencies
 pnpm install
