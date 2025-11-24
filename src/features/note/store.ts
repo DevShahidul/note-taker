@@ -1,13 +1,15 @@
 import { create, type StateCreator } from "zustand";
-import type { NoteType } from "./types";
+import type { NoteType, SortOrder, LessonFilter  } from "./types";
 import { immer } from "zustand/middleware/immer";
-import { persist } from "zustand/middleware";
+import { persist, devtools } from "zustand/middleware";
 import { createId } from "@/features/note/utils";
 
 type NoteState = {
   notes: NoteType[];
   showNoteForm: boolean;
   editNote: NoteType | null;
+  sortOrder: SortOrder;
+  lessonFilter: LessonFilter;
 };
 
 type NoteActions = {
@@ -19,12 +21,18 @@ type NoteActions = {
   hideNoteFrom: () => void;
   setEditNote: (note: NoteType) => void;
   clearNotes: () => void;
+  setSortOrder: (order: SortOrder) => void;
+  setLessonFilter: (lessonId: LessonFilter) => void;
+  getUniqueLessons: () => string[];
+  clearFilters: () => void;
 };
 
 const initialNotes = {
   notes: [],
   showNoteForm: false,
   editNote: null,
+  sortOrder: "newest" as SortOrder,
+  lessonFilter: "all" as LessonFilter,
 };
 
 export type NoteStoreSlice = NoteState & NoteActions;
@@ -54,17 +62,23 @@ export const createNoteSlice: StateCreator<
   },
 
   updateNote: (id, content) => {
-    set((state) => ({
-      notes: state.notes.map((note) =>
-        note.id === id ? { ...note, content } : note
-      ),
-    }));
+    set((state) => {
+      const noteIndex = state.notes.findIndex((note) => note.id === id);
+      if (noteIndex !== -1) {
+        state.notes[noteIndex].content = content;
+        return;
+      }
+    });
   },
 
   removeNote: (noteId) => {
-    set((state) => ({
-      notes: state.notes.filter((note) => note.id !== noteId),
-    }));
+    set((state) => {
+      const noteIndex = state.notes.findIndex((note) => note.id === noteId);
+      if (noteIndex !== -1) {
+        state.notes.splice(noteIndex, 1);
+        return;
+      }
+    });
   },
 
   setEditNote: (note) => {
@@ -77,13 +91,26 @@ export const createNoteSlice: StateCreator<
   hideNoteFrom: () => set({ showNoteForm: false, editNote: null }),
 
   clearNotes: () => set({ notes: [] }),
+
+  setSortOrder: (order: SortOrder) => set({ sortOrder: order }),
+
+  setLessonFilter: (lessonId: LessonFilter) => set({ lessonFilter: lessonId }),
+
+  getUniqueLessons: () => {
+    const lessons = get().notes.map((note) => note.lessonId);
+    return Array.from(new Set(lessons));
+  },
+
+  clearFilters: () => set({ sortOrder: "newest", lessonFilter: "all" }),
 });
 
 export const useNote = create<NoteStoreSlice>()(
   persist(
-    immer((...a) => ({
-      ...createNoteSlice(...a),
-    })),
+    devtools(
+      immer((...a) => ({
+        ...createNoteSlice(...a),
+      })),
+    ),
     { name: "note-storage" }
   )
 );

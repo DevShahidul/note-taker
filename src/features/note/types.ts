@@ -6,3 +6,6 @@ export type NoteType = {
     content: string;
     createdAt: string;
 }
+
+export type SortOrder = "oldest" | "newest";
+export type LessonFilter = "all" | string;

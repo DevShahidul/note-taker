@@ -3,14 +3,14 @@ import { useNote } from "./store";
 import { NoteList } from "@/features/note/components/NoteList";
 import { useShallow } from "zustand/react/shallow";
 import { NoteForm } from "@/features/note/components/NoteForm";
+import { useFilteredNotes } from "./hooks/useFilteredNotes";
 
 export const NotePresenter = () => {
-  const { notes, showNoteForm, displayNoteFrom, hideNoteFrom } = useNote(
+  const { showNoteForm, displayNoteFrom, hideNoteFrom } = useNote(
     useShallow((state) => ({
-      notes: state.notes,
       showNoteForm: state.showNoteForm,
       displayNoteFrom: state.displayNoteFrom,
-      hideNoteFrom: state.hideNoteFrom
+      hideNoteFrom: state.hideNoteFrom,
     }))
   );
 
@@ -18,6 +18,7 @@ export const NotePresenter = () => {
     hideNoteFrom();
   }
  
+  const filteredNotes = useFilteredNotes();
 
   return (
     <div className="max-w-4xl mx-auto p-10 space-y-6">
@@ -29,7 +30,7 @@ export const NotePresenter = () => {
       ) : (
         <NoteForm onCancel={hideNoteFrom} onSave={handleSave} />
       )}
-      <NoteList notes={notes} />
+      <NoteList notes={filteredNotes} />
     </div>
   );
 };
