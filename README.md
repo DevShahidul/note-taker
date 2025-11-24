@@ -15,7 +15,7 @@ This project demonstrates clean architecture using **Zustand**, **Shadcn/UI**, a
 You can try the app here:
 **[live demo link here:]**
 
-> [https://note-taker.netlify.app](https://note-taker.netlify.app)
+> [https://note-taker-zr.netlify.app](https://note-taker-zr.netlify.app)
 
 ---
 
