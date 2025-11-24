@@ -9,6 +9,7 @@ import { useNote } from "../store";
 import { NoteCard } from "./NoteCard";
 import { NoteForm } from "./NoteForm";
 import type { NoteType } from "../types";
+import { formatTime } from "@/lib/utils";
 
 type Props = {
   note: NoteType;
@@ -27,7 +28,7 @@ const handleSave = () => setIsEditing(false);
 const handleCancel = () => setIsEditing(false);
 const handleDelete = () => removeNote(note.id);
 
-const timeStamp = note.bookmarkTime.toFixed(1);
+const timeStamp =  formatTime(note.bookmarkTime);
 
   return (
     <NoteCard

@@ -7,15 +7,18 @@ import { Badge } from "@/components/ui/badge";
 import type { NoteType } from "../types";
 import { createId } from "@/features/note/utils";
 import { NoteCard } from "./NoteCard";
+import { formatTime } from "@/lib/utils";
 
 type NoteFormProps = {
   editNote?: NoteType | null;
+  createTime?: number | null;
   onSave: () => void;
   onCancel: () => void;
 };
 
 export const NoteForm = ({
   editNote = null,
+  createTime = null,
   onSave,
   onCancel,
 }: NoteFormProps) => {
@@ -40,6 +43,8 @@ export const NoteForm = ({
     setFormData({...formData, content})
   }
 
+  const timeStamp = createTime ? formatTime(createTime) : editNote ? editNote.bookmarkTime.toFixed(1) : "0.0";
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -58,7 +63,7 @@ export const NoteForm = ({
         sectionId: `section-${id}`,
         lessonId: `lesson-${id}`,
         createdAt: new Date().toISOString(),
-        bookmarkTime: Math.random() * 120,
+        bookmarkTime: createTime || 0,
       };
       createNote(newNote);
     }
@@ -71,9 +76,6 @@ export const NoteForm = ({
     const length = input.value.length;
     input.setSelectionRange(length, length);
   }
-
-  const timeStamp = new Date().getTime();
-
 
   return (
     <NoteCard
