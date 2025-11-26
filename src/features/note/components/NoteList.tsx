@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useNote } from "@/features/note/store";
 import { useShallow } from "zustand/react/shallow";
+import EmptyNote from "./EmptyNote";
 
 type NoteListProps = {
   notes: NoteType[];
@@ -29,7 +30,7 @@ export const NoteList = ({ notes }: NoteListProps) => {
 
   const uniqueLessons = getUniqueLessons();
 
-  if (!notes.length) return <p className="text-2xl">No notes available</p>;
+  if (!notes.length) return <EmptyNote />;
 
   return (
     <div className="space-y-4">
