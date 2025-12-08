@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { useNote } from "../store";
 import { useShallow } from "zustand/shallow";
+import { useNote } from "../store";
 
 export const useFilteredNotes = () => {
     const { notes, sortOrder, lessonFilter } = useNote(

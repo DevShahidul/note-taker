@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { useNote } from "./store";
-import { NoteList } from "@/features/note/components/NoteList";
-import { useShallow } from "zustand/react/shallow";
-import { NoteForm } from "@/features/note/components/NoteForm";
-import { useFilteredNotes } from "./hooks/useFilteredNotes";
 import { useState } from "react";
+import { useShallow } from "zustand/react/shallow";
+import { Button } from "@/components/ui/button";
 import { getCurrentTimeAsNumber } from "@/lib/utils";
+import { useNote } from "./store";
+import { NoteList } from "./components/NoteList";
+import { NoteForm } from "./components/NoteForm";
+import { useFilteredNotes } from "./hooks/useFilteredNotes";
 
 export const NotePresenter = () => {
   const [currentTime, setCurrentTime] = useState<number>(0);

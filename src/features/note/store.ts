@@ -1,8 +1,8 @@
 import { create, type StateCreator } from "zustand";
-import type { NoteType, SortOrder, LessonFilter  } from "./types";
 import { immer } from "zustand/middleware/immer";
 import { persist, devtools } from "zustand/middleware";
-import { createId } from "@/features/note/utils";
+import type { NoteType, SortOrder, LessonFilter  } from "./types";
+import { createId } from "./utils";
 
 type NoteState = {
   notes: NoteType[];

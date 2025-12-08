@@ -1,5 +1,5 @@
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import type { ReactNode } from "react";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
 type NoteCardProps = {
   header?: ReactNode;

@@ -1,5 +1,4 @@
-import type { NoteType, SortOrder } from "@/features/note/types";
-import { NoteItem } from "./NoteItem";
+import { useShallow } from "zustand/react/shallow";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -8,8 +7,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useNote } from "@/features/note/store";
-import { useShallow } from "zustand/react/shallow";
+import type { NoteType, SortOrder } from "../types";
+import { NoteItem } from "./NoteItem";
+import { useNote } from "../store";
 import EmptyNote from "./EmptyNote";
 
 type NoteListProps = {

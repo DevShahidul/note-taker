@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { useNote } from "../store";
-import { useShallow } from "zustand/react/shallow";
 import { Badge } from "@/components/ui/badge";
-import type { NoteType } from "../types";
-import { createId } from "@/features/note/utils";
-import { NoteCard } from "./NoteCard";
 import { formatTime } from "@/lib/utils";
+import { useNote } from "../store";
+import type { NoteType } from "../types";
+import { createId } from "../utils";
+import { NoteCard } from "./NoteCard";
 
 type NoteFormProps = {
   editNote?: NoteType | null;
