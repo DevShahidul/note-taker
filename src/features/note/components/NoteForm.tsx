@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatTime } from "@/lib/utils";
 import { useNote } from "../store";
-import type { NoteType } from "../types";
+import type { Note } from "../types";
 import { createId } from "../utils";
 import { NoteCard } from "./NoteCard";
 
 type NoteFormProps = {
-  editNote?: NoteType | null;
+  selectedType: Note['type'];
+  editNote?: Note | null;
   createTime?: number | null;
   onSave: () => void;
   onCancel: () => void;
@@ -19,6 +20,7 @@ type NoteFormProps = {
 export const NoteForm = ({
   editNote = null,
   createTime = null,
+  selectedType,
   onSave,
   onCancel,
 }: NoteFormProps) => {
@@ -57,9 +59,10 @@ export const NoteForm = ({
       updateNote(editNote.id, formData.content);
     } else {
       const id = createId()
-      const newNote: NoteType = {
+      const newNote: Note = {
         ...formData,
         id,
+        type: selectedType,
         sectionId: `section-${id}`,
         lessonId: `lesson-${id}`,
         createdAt: new Date().toISOString(),

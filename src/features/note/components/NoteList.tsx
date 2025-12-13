@@ -7,16 +7,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { NoteType, SortOrder } from "../types";
+import type { Note, SortOrder } from "../types";
 import { NoteItem } from "./NoteItem";
 import { useNote } from "../store";
 import EmptyNote from "./EmptyNote";
 
 type NoteListProps = {
-  notes: NoteType[];
+  notes: Note[];
+  selectedType: Note['type'],
 };
 
-export const NoteList = ({ notes }: NoteListProps) => {
+export const NoteList = ({ notes, selectedType }: NoteListProps) => {
   const { sortOrder, lessonFilter, setSortOrder, setLessonFilter, getUniqueLessons, clearFilters } = useNote(
     useShallow((state) => ({
       sortOrder: state.sortOrder,
@@ -79,8 +80,8 @@ export const NoteList = ({ notes }: NoteListProps) => {
 
       {/* Notes List */}
       <div className="space-y-4">
-        {notes.map((note: NoteType) => (
-          <NoteItem key={note.id} note={note} />
+        {notes.map((note: Note) => (
+          <NoteItem key={note.id} note={note} selectedType={selectedType} />
         ))}
       </div>
     </div>

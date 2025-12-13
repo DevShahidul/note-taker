@@ -1,25 +1,25 @@
 import { create, type StateCreator } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist, devtools } from "zustand/middleware";
-import type { NoteType, SortOrder, LessonFilter  } from "./types";
+import type { Note, SortOrder, LessonFilter  } from "./types";
 import { createId } from "./utils";
 
 type NoteState = {
-  notes: NoteType[];
+  notes: Note[];
   showNoteForm: boolean;
-  editNote: NoteType | null;
+  editNote: Note | null;
   sortOrder: SortOrder;
   lessonFilter: LessonFilter;
 };
 
 type NoteActions = {
-  createNote: (note: Omit<NoteType, "id" | "createdAt">) => void;
-  getNotesForLesson: (lessonId: string) => NoteType[];
+  createNote: (note: Omit<Note, "id" | "createdAt">) => void;
+  getNotesForLesson: (lessonId: string) => Note[];
   updateNote: (id: string, content: string) => void;
   removeNote: (noteId: string) => void;
   displayNoteFrom: () => void;
   hideNoteFrom: () => void;
-  setEditNote: (note: NoteType) => void;
+  setEditNote: (note: Note) => void;
   clearNotes: () => void;
   setSortOrder: (order: SortOrder) => void;
   setLessonFilter: (lessonId: LessonFilter) => void;
@@ -58,7 +58,7 @@ export const createNoteSlice: StateCreator<
   },
 
   getNotesForLesson: (lessonId) => {
-    return get().notes.filter((note: NoteType) => note.id === lessonId);
+    return get().notes.filter((note: Note) => note.id === lessonId);
   },
 
   updateNote: (id, content) => {

@@ -17,10 +17,10 @@ export const NoteCard = ({
     bordered = true 
 }: NoteCardProps) => {
   return (
-    <Card className="rounded-sm py-4 gap-4 shadow-2xs">
+    <Card className="rounded-sm py-4 gap-4 shadow-2xs relative">
         {(header || headerActions) && (
-            <CardHeader className={`flex items-center px-3 ${bordered ? "border-b pb-3!" : ""}`}>
-                <div className="inline-flex items-center space-x-3">{header}</div>
+            <CardHeader className={`flex items-center px-3 static ${bordered ? "border-b pb-3!" : ""}`}>
+                <div className="inline-flex items-center space-x-3 static">{header}</div>
                 {headerActions && (
                 <div className="ms-auto inline-flex items-center">{headerActions}</div>
                 )}
