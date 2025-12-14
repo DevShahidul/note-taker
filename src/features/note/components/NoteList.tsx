@@ -7,18 +7,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import type { Note, SortOrder } from "../types";
 import { NoteItem } from "./NoteItem";
 import { useNote } from "../store";
 import EmptyNote from "./EmptyNote";
+import { SelectDropdown } from "./SelectDropdown";
 
 type NoteListProps = {
   notes: Note[];
-  selectedType: Note['type'],
 };
 
-export const NoteList = ({ notes, selectedType }: NoteListProps) => {
-  const { sortOrder, lessonFilter, setSortOrder, setLessonFilter, getUniqueLessons, clearFilters } = useNote(
+export const NoteList = ({ notes }: NoteListProps) => {
+  const {
+    sortOrder,
+    lessonFilter,
+    setSortOrder,
+    setLessonFilter,
+    getUniqueLessons,
+    clearFilters,
+  } = useNote(
     useShallow((state) => ({
       sortOrder: state.sortOrder,
       lessonFilter: state.lessonFilter,
@@ -31,43 +39,51 @@ export const NoteList = ({ notes, selectedType }: NoteListProps) => {
 
   const uniqueLessons = getUniqueLessons();
 
+  const sortOptions = [
+    {
+      value: "oldest",
+      title: "Oldest",
+    },
+    {
+      value: "newest",
+      title: "Most Recent",
+    },
+  ];
+
+  function handleLessonFilter(value: string) {
+    setLessonFilter(value)
+  }
+
   if (!notes.length) return <EmptyNote />;
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-4 flex-wrap">
         {/* Sort by Date */}
-        <div className="flex items-center gap-2">
-          <label className="text-sm font-medium">Sort by:</label>
-          <Select value={sortOrder} onValueChange={(value) => setSortOrder(value as SortOrder)}>
-            <SelectTrigger className="w-40">
-              <SelectValue placeholder="Select sort order" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="oldest">Oldest</SelectItem>
-              <SelectItem value="newest">Most Recent</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <SelectDropdown 
+          value={sortOrder} 
+          label="Sort by:" 
+          placeholder="Select sort order"  
+          onChange={(value) => setSortOrder(value as SortOrder)}
+        >
+            {sortOptions.map((opt) => <SelectItem value={opt.value}>{opt.title}</SelectItem>)}
+        </SelectDropdown>
 
         {/* Filter by Lesson */}
         {uniqueLessons.length > 0 && (
-          <div className="flex items-center gap-2">
-            <label className="text-sm font-medium">Lesson:</label>
-            <Select value={lessonFilter} onValueChange={setLessonFilter}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="Select lesson" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Lessons</SelectItem>
-                {uniqueLessons.map((lesson) => (
-                  <SelectItem key={lesson} value={lesson}>
-                    {lesson}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <SelectDropdown
+            value={lessonFilter} 
+            label="Lesson:" 
+            placeholder="Select lesson"  
+            onChange={handleLessonFilter}
+          >
+            <SelectItem value="all">All Lessons</SelectItem>
+            {uniqueLessons.map((lesson) => (
+              <SelectItem key={lesson} value={lesson}>
+                {lesson}
+              </SelectItem>
+            ))}
+          </SelectDropdown>
         )}
 
         {/* Clear Filters Button */}
@@ -81,7 +97,7 @@ export const NoteList = ({ notes, selectedType }: NoteListProps) => {
       {/* Notes List */}
       <div className="space-y-4">
         {notes.map((note: Note) => (
-          <NoteItem key={note.id} note={note} selectedType={selectedType} />
+          <NoteItem key={note.id} note={note} />
         ))}
       </div>
     </div>

@@ -10,6 +10,7 @@ type NoteState = {
   editNote: Note | null;
   sortOrder: SortOrder;
   lessonFilter: LessonFilter;
+  noteType: Note['type'];
 };
 
 type NoteActions = {
@@ -25,6 +26,7 @@ type NoteActions = {
   setLessonFilter: (lessonId: LessonFilter) => void;
   getUniqueLessons: () => string[];
   clearFilters: () => void;
+  setNoteType: (value: Note['type']) => void;
 };
 
 const initialNotes = {
@@ -33,6 +35,7 @@ const initialNotes = {
   editNote: null,
   sortOrder: "newest" as SortOrder,
   lessonFilter: "all" as LessonFilter,
+  noteType: "" as Note['type']
 };
 
 export type NoteStoreSlice = NoteState & NoteActions;
@@ -87,6 +90,7 @@ export const createNoteSlice: StateCreator<
     });
   },
 
+  setNoteType: (value) => set({noteType: value}),
   displayNoteFrom: () => set({ showNoteForm: true }),
   hideNoteFrom: () => set({ showNoteForm: false, editNote: null }),
 

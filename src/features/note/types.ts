@@ -1,6 +1,6 @@
 export type Note = {
     id: string;
-    type:  "summary" | "key-points" | "questions";
+    type?: "summary" | "key-points" | "questions";
     sectionId: string;
     lessonId: string;
     bookmarkTime: number;

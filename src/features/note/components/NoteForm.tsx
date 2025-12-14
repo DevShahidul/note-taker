@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { FileText, Brain, MessageSquare } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,9 +9,32 @@ import { useNote } from "../store";
 import type { Note } from "../types";
 import { createId } from "../utils";
 import { NoteCard } from "./NoteCard";
+import { SelectDropdown } from "./SelectDropdown";
+import { SelectItem } from "@/components/ui/select";
+
+
+export const NOTE_TYPES = [
+  {
+    id: "summary",
+    label: "Summary",
+    icon: FileText,
+    color: "bg-blue-500",
+  },
+  {
+    id: "key-points",
+    label: "Key Points",
+    icon: Brain,
+    color: "bg-green-500",
+  },
+  {
+    id: "questions",
+    label: "Questions",
+    icon: MessageSquare,
+    color: "bg-orange-500",
+  },
+] as const;
 
 type NoteFormProps = {
-  selectedType: Note['type'];
   editNote?: Note | null;
   createTime?: number | null;
   onSave: () => void;
@@ -20,13 +44,14 @@ type NoteFormProps = {
 export const NoteForm = ({
   editNote = null,
   createTime = null,
-  selectedType,
   onSave,
   onCancel,
 }: NoteFormProps) => {
   
-    const { createNote, updateNote } = useNote(
+    const { createNote, updateNote, noteType, setNoteType} = useNote(
     useShallow((state) => ({
+      noteType: state.noteType,
+      setNoteType: state.setNoteType,
       createNote: state.createNote,
       updateNote: state.updateNote,
     }))
@@ -62,7 +87,7 @@ export const NoteForm = ({
       const newNote: Note = {
         ...formData,
         id,
-        type: selectedType,
+        type: noteType,
         sectionId: `section-${id}`,
         lessonId: `lesson-${id}`,
         createdAt: new Date().toISOString(),
@@ -94,6 +119,25 @@ export const NoteForm = ({
                 </Badge>
               </>
             )}
+            <SelectDropdown
+              value={noteType}
+              placeholder="Select note type"
+              label="Note Type"
+              onChange={(value) => setNoteType(value as Note['type'])}
+            >
+              {NOTE_TYPES.map((item) => {
+
+                const Icon = item.icon;
+
+                return (
+                <SelectItem value={item.id}> 
+                  <div className={`w-3 h-3 rounded-full ${item.color}`} />
+                  <Icon className="size-4" /> 
+                  {item.label}
+                </SelectItem>
+              )
+              })}
+            </SelectDropdown>
             </>
         }
 
