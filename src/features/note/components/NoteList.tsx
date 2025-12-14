@@ -1,11 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
   SelectItem,
-  SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 
 import type { Note, SortOrder } from "../types";
