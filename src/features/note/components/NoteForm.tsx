@@ -11,6 +11,7 @@ import { createId } from "../utils";
 import { NoteCard } from "./NoteCard";
 import { SelectDropdown } from "./SelectDropdown";
 import { SelectItem } from "@/components/ui/select";
+import { RichTextEditor } from "./rich-text-editor";
 
 
 export const NOTE_TYPES = [
@@ -65,8 +66,8 @@ export const NoteForm = ({
 
   const isEditing = !!editNote;
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const content = e.target.value;
+  const handleChange = (content: string) => {
+    // const content = e.target.value;
     setFormData({...formData, content})
   }
 
@@ -153,7 +154,7 @@ export const NoteForm = ({
         }
     >
         <form onSubmit={handleSubmit}>
-            <Textarea
+            {/* <Textarea
             autoFocus
             value={formData.content}
             onChange={handleChange}
@@ -161,9 +162,14 @@ export const NoteForm = ({
             id="note-content"
             name="note-content"
             className="resize-none focus:shadow-none focus-visible:ring-primary"
+            /> */}
+            <RichTextEditor 
+              content={formData.content}
+              onChange={handleChange}
             />
             {error && <p className="text-red-600 mt-2">{error}</p>}
         </form>
+
     </NoteCard>
   );
 };

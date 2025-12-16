@@ -11,6 +11,10 @@ import { NoteForm } from "./NoteForm";
 import type { Note } from "../types";
 import { cn, formatTime } from "@/lib/utils";
 import { NOTE_TYPES } from "./NoteForm";
+import StarterKit from "@tiptap/starter-kit";
+import Highlight from "@tiptap/extension-highlight";
+import CodeBlock from "@tiptap/extension-code-block";
+import { generateHTML } from "@tiptap/react";
 
 type Props = {
   note: Note;
@@ -33,6 +37,21 @@ export const NoteItem = ({ note }: Props) => {
 
   const noteType = NOTE_TYPES.find((nt) => nt.id === note.type);
   const Icon = noteType?.icon || FileText;
+
+
+  const renderNoteContent = () => {
+    try {
+      const json = JSON.parse(note.content);
+      const html = generateHTML(json, [
+        StarterKit,
+        Highlight,
+        CodeBlock
+      ]);
+      return html;
+    } catch {
+      return note.content
+    }
+  }
 
   return (
     <NoteCard
@@ -85,7 +104,7 @@ export const NoteItem = ({ note }: Props) => {
       {isEditing ? (
         <NoteForm onSave={handleSave} onCancel={handleCancel} editNote={note} />
       ) : (
-        <div>{note.content}</div>
+        <div className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{__html: renderNoteContent()}}></div>
       )}
     </NoteCard>
   );
