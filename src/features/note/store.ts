@@ -69,6 +69,7 @@ export const createNoteSlice: StateCreator<
       const noteIndex = state.notes.findIndex((note) => note.id === id);
       if (noteIndex !== -1) {
         state.notes[noteIndex].content = content;
+        state.notes[noteIndex].type = state.noteType;
         return;
       }
     });

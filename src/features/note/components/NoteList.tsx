@@ -62,7 +62,7 @@ export const NoteList = ({ notes }: NoteListProps) => {
           placeholder="Select sort order"  
           onChange={(value) => setSortOrder(value as SortOrder)}
         >
-            {sortOptions.map((opt) => <SelectItem value={opt.value}>{opt.title}</SelectItem>)}
+            {sortOptions.map((opt) => <SelectItem key={opt.value} value={opt.value}>{opt.title}</SelectItem>)}
         </SelectDropdown>
 
         {/* Filter by Lesson */}
