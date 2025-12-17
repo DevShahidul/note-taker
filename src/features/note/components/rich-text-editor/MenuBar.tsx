@@ -81,7 +81,8 @@ export function MenuBar({ editor }: MenuBarProps) {
       {menuOptions.map((item, index) => (
         <Toggle
           key={index}
-          pressed={item.preesed}
+          aria-pressed={item.preesed}
+          data-state={item.preesed ? "on" : "off"}
           onPressedChange={item.onClick}
           aria-label={item.label}
         >

@@ -3,15 +3,17 @@ import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import CodeBlock from "@tiptap/extension-code-block";
 import { MenuBar } from "./MenuBar";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface RichTextEditorProps {
   content: string | object;
   onChange: (content: string) => void;
 }
 
-export function RichTextEditor({ content, onChange}: RichTextEditorProps) {
-    const isInitialMount = useRef(true);
+export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
+  const isInitialMount = useRef(true);
+  const [, setUpdateTrigger] = useState(0);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -40,7 +42,7 @@ export function RichTextEditor({ content, onChange}: RichTextEditorProps) {
       }),
     ],
     content: content || "",
-    autofocus: 'end',
+    autofocus: "end",
     editorProps: {
       attributes: {
         class:
@@ -50,15 +52,22 @@ export function RichTextEditor({ content, onChange}: RichTextEditorProps) {
     onUpdate: ({ editor }) => {
       const json = editor.getJSON();
       onChange(JSON.stringify(json));
+      setUpdateTrigger((prev) => prev + 1);
+    },
+    onSelectionUpdate: () => {
+      setUpdateTrigger((prev) => prev + 1);
+    },
+    onFocus: () => {
+      setUpdateTrigger((prev) => prev + 1);
     },
   });
 
   useEffect(() => {
     if (!editor || !content) return;
 
-    if(isInitialMount.current) {
-        isInitialMount.current = false;
-        return;
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
     }
 
     // Avoid unnecessary updates if content is the same
@@ -82,14 +91,14 @@ export function RichTextEditor({ content, onChange}: RichTextEditorProps) {
     }
   }, [content, editor]);
 
-  //   Cleanup on unmount
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       editor?.destroy();
     };
   }, [editor]);
 
-  if(!editor) {
+  if (!editor) {
     return null;
   }
 
