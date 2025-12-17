@@ -3,14 +3,15 @@ import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import CodeBlock from "@tiptap/extension-code-block";
 import { MenuBar } from "./MenuBar";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface RichTextEditorProps {
   content: string | object;
   onChange: (content: string) => void;
 }
 
-export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
+export function RichTextEditor({ content, onChange}: RichTextEditorProps) {
+    const isInitialMount = useRef(true);
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -39,6 +40,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
       }),
     ],
     content: content || "",
+    autofocus: 'end',
     editorProps: {
       attributes: {
         class:
@@ -53,6 +55,11 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
 
   useEffect(() => {
     if (!editor || !content) return;
+
+    if(isInitialMount.current) {
+        isInitialMount.current = false;
+        return;
+    }
 
     // Avoid unnecessary updates if content is the same
     const currentContent = JSON.stringify(editor.getJSON());
