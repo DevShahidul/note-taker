@@ -93,10 +93,6 @@ export const NoteForm = ({
     return "";
   })
 
-  // const [formData, setFormData] = useState({
-  //   content: (isEditing && JSON.parse(editNote?.content)) || "",
-  // });
-
   const [error, setError] = useState("");
 
   // Sync content when edit note changes
@@ -132,12 +128,10 @@ export const NoteForm = ({
       return;
     }
 
-    // TODO: Add check for if not select note type if needed
-
     try{
       if(isEditing && editNote){
         updateNote(editNote.id, content);
-        console.log("Note updated:", {id: editNote.id, type: noteType});
+        // console.log("Note updated:", {id: editNote.id, type: noteType});
       } else{
         const id = createId();
         const newNote: Omit<Note, "id" | "createdAt"> = {
@@ -149,7 +143,7 @@ export const NoteForm = ({
         };
 
         createNote(newNote);
-        console.log("Note created:", newNote);
+        // console.log("Note created:", newNote);
       }
       onSave();
     } catch(err) {
@@ -162,12 +156,6 @@ export const NoteForm = ({
     setError("");
     onCancel();
   }
-
-  // function handleFocus(e: React.ChangeEvent<HTMLTextAreaElement>) {
-  //   const input = e.target;
-  //   const length = input.value.length;
-  //   input.setSelectionRange(length, length);
-  // }
 
   return (
     <NoteCard
